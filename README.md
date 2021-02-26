@@ -1,7 +1,7 @@
 
 # Major League Baseball Hall of Fame Analysis
 
-![MLB-Logo](Visualizations/MLB-Logo.png)
+![MLBLogo](Visualizations/MLBLogo.png)
 
 ## Contributing Member:
 
