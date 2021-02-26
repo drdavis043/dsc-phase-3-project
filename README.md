@@ -1,113 +1,96 @@
 
-# Phase 3 Project
+# Major League Baseball Hall of Fame Analysis
 
-Congratulations! You've made it through another _intense_ module, and now you're ready to show off your newfound Machine Learning skills!
+![MLB Logo](Visualizations/MLB Logo.png)
 
-![awesome](https://raw.githubusercontent.com/learn-co-curriculum/dsc-phase-3-project/main/images/smart.gif)
+## Contributing Member:
 
-All that remains in Phase 3 is to put your new skills to use with another large project! This project should take 20 to 30 hours to complete.
+Derek Davis
 
 ## Project Overview
 
-For this project, you will engage in the full data science process from start to finish, solving a classification problem using a dataset of your choice.
+There is no better sound in sports than the crack of the bat or pop of the mitt, but there is much more to gather from a day at the ballpark than just these simple pleasures. Major League Baseball is flooded with statistics and analytics, every team is fighting for a competitive advantage through modified fielding position, enhanced swing paths and basic managerial decisions. However, the question we are going to answer today is going to take us through all Eras of baseball from the Dead Ball Era to the Expansion and Steriod Eras and beyond. The question I will answer today is: What are the major considerations a member of the Baseball Writers of America should take into account when voting for future Hall of Famers?
 
-### The Data
+## Data Exploration and Cleaning
 
-You have the option to either **choose a dataset from a curated list** or **choose your own dataset _not on the list_**. The goal is to choose a dataset appropriate to the type of business problem and/or classification methods that most interests you. It is up to you to define a stakeholder and business problem appropriate to the dataset you choose. If you are feeling overwhelmed or behind, we recommend you choose dataset #2 or #3 from the curated list.
+My first step was to import, explore, clean and combine all necessary datasets. All tables were provided by and downloaded from http://www.seanlahman.com/baseball-archive/statistics/. The following is a list of all tables used in this analysis.
 
-If you choose a dataset from the curated list, **inform your instructor which dataset you chose** and jump right into the project. If you choose your own dataset, **run the dataset and business problem by your instructor for approval** before starting your project.
+### Batting
+Contains all hitting statistics for every player broken down by sesaon.
 
-### Curated List of Datasets
+### Pitching
+Contains all pitching statistics for every player broken down by sesaon.
 
-You may select any of the four datasets below - we provide brief descriptions of each. Follow the links to learn more about the dataset and business problems before making a final decision.
+### Fielding
+Contains all fielding statistics for every player broken down by sesaon.
 
-#### 1) [Chicago Car Crashes](https://data.cityofchicago.org/Transportation/Traffic-Crashes-Crashes/85ca-t3if)
-Note this links also to [Vehicle Data](https://data.cityofchicago.org/Transportation/Traffic-Crashes-Vehicles/68nd-jvt3) and to [Driver/Passenger Data](https://data.cityofchicago.org/Transportation/Traffic-Crashes-People/u6pd-qa9d).
+### All-Stars
+Contains the All-Star selections dating back to the inception of the game in 1933.
 
-Build a classifier to predict the primary contributory cause of a car accident, given information about the car, the people in the car, the road conditions etc. You might imagine your audience as a Vehicle Safety Board who's interested in reducing traffic accidents, or as the City of Chicago who's interested in becoming aware of any interesting patterns. Note that there is a **multi-class** classification problem. You will almost certainly want to bin or trim or otherwise limit the number of target categories on which you ultimately predict. Note e.g. that some primary contributory causes have very few samples.
+### Awards
+Only top awards for on field performance were considered for this model.
 
-#### 2) [Terry Traffic Stops](https://catalog.data.gov/dataset/terry-stops)
-In [*Terry v. Ohio*](https://www.oyez.org/cases/1967/67), a landmark Supreme Court case in 1967-8, the court found that a police officer was not in violation of the "unreasonable search and seizure" clause of the Fourth Amendment, even though he stopped and frisked a couple of suspects only because their behavior was suspicious. Thus was born the notion of "reasonable suspicion", according to which an agent of the police may e.g. temporarily detain a person, even in the absence of clearer evidence that would be required for full-blown arrests etc. Terry Stops are stops made of suspicious drivers.
+### Hall of Fame
+List of all players who have been elected into the Hall of Fame, will be the target variable.
 
-Build a classifier to predict whether an arrest was made after a Terry Stop, given information about the presence of weapons, the time of day of the call, etc. Note that this is a **binary** classification problem.
+## Initial Considerations:
 
-Note that this dataset also includes information about gender and race. You **may** use this data as well. You may, e.g. pitch your project as an inquiry into whether race (of officer or of subject) plays a role in whether or not an arrest is made.
+![Roger-Clemens](Visualizations/Roger-Clemens.png)
 
-If you **do** elect to make use of race or gender data, be aware that this can make your project a highly sensitive one; your discretion will be important, as well as your transparency about how you use the data and the ethical issues surrounding it.
+![Barry-Bonds](Visualizations/Barry-Bonds.png)
 
-#### 3) [SyriaTel Customer Churn](https://www.kaggle.com/becksddf/churn-in-telecoms-dataset)
+The two individuals pictured here, Roger Clemens and Barry Bonds, could be argued as the best pitcher and hitter of all time. Roger Clemens has won more Cy Young awards than any other player over the course of his career and Barry Bonds famously broke Hank Aaron's longstanding career home run record at the end of his career. Typically these two achievements would be more than enough to be consider first ballot Hall of Famers; however, due to suspected steroid use they find themselves on the outside looking in. For that reason I am going to remove those individuals who have not been elected due to non-performance related issues such as Performance Enhancing Drugs and scandals detrimental to the sport to avoid misleading outliers.
 
-Build a classifier to predict whether a customer will ("soon") stop doing business with SyriaTel, a telecommunications company. Note that this is a **binary** classification problem.
+## Exploratory Analysis
 
-Most naturally, your audience here would be the telecom business itself, interested in losing money on customers who don't stick around very long. Are there any predictable patterns here?
+After removing these outliers I took a look at some of the key statistics and visually compared how both sets of players differed. The two that I initially thought would be the most telling are ERA for pitchers and OPS for batters.
 
-#### 4) [Tanzanian Water Well Data](https://www.drivendata.org/competitions/7/pump-it-up-data-mining-the-water-table/page/23/)
-This dataset is part of an *active competition* until April 31, 2021!
+![ERA](Visualizations/ERA.png)
 
-Tanzania, as a developing country, struggles with providing clean water to its population of over 57,000,000. There are many waterpoints already established in the country, but some are in need of repair while others have failed altogether.
+![OPS](Visualizations/OPS.png)
 
-Build a classifier to predict the condition of a water well, using information about the sort of pump, when it was installed, etc. Note that this is a **ternary** classification problem.
+After exploring some of the features I created a heat map to determine which were highly correlated and could lead to multicollinearity issues in the model.
 
-### Sourcing Your Own Data
+![PitchingHM](Visualizations/PitchingHM.png)
 
-Sourcing new data is a valuable skill for data scientists, but it requires a great deal of care. An inappropriate dataset or an unclear business problem can lead you spend a lot of time on a project that delivers underwhelming results. The guidelines below will help you complete a project that demonstrates your ability to engage in the full data science process.
+![BattingHM](Visualizations/BattingHM.png)
 
-Your dataset must be...
+Now that I have explored and prepped the data, it was time to test a few models to determine which best worked for this analysis.
 
-1. **Appropriate for classification.** It should have a categorical outcome or the data needed to engineer one.   
+## Model Results
 
-2. **Usable to solve a specific business problem.** This solution must rely on your classification model.
+For both models, the Support Vector Machine ended up producing the best results. After tuning the intial pitching model with GridSearchCV it produced a highly accurate result of 99.25% for both training and testing accuracy. These results were very good, but slightly misleading as there would be been 97% accuracy if all pitchers were classified as non-inductees. A look at the below confusion matrix shows that only 3 pitchers were misclassified
 
-3. **Somewhat complex.** It should contain a minimum of 1000 rows and 10 features.
+![PitchingCM](Visualizations/PitchingCM.png)
 
-4. **Unfamiliar.** It can't be one we've already worked with during the course or that is commonly used for demonstration purposes (e.g. MNIST).
+I also created a table showing the top features of this model, which visualizes what the BBWA emphasize when they are considering a player for induction.
 
-5. **Manageable.** Stick to datasets that you can model using the techniques introduced in Phase 3.
+![FeatureImportance](Visualizations/FeatureImportance.png)
 
-Once you've sourced your own dataset and identified the business problem you want to solve with it, you must to **run them by your instructor for approval**.
+The hitting model, which also used SVM, found the best results after the features were scaled using StandardScalar. Although this model also had a high degree of testing accuracy at just under 98%, it was only able to correctly classify 67% of the Hall of Famers correctly. As visualized below, there was a slight issue with the recall score of this model and would be an area to consider in the future work of this analysis.
 
-#### Problem First, or Data First?
+![BattingCM](Visualizations/BattingCM.png)
 
-There are two ways that you can source your own dataset: **_Problem First_** or **_Data First_**. The less time you have to complete the project, the more strongly we recommend a Data First approach to this project.
+Below is also the top features of the batting model. Although most are what I would have initially predicted, OPS was a lot lower in importance than i had anticipated.
 
-**_Problem First_**: Start with a problem that you are interested in that you could potentially solve with a classification model. Then look for data that you could use to solve that problem. This approach is high-risk, high-reward: Very rewarding if you are able to solve a problem you are invested in, but frustrating if you end up sinking lots of time in without finding appropriate data. To mitigate the risk, set a firm limit for the amount of time you will allow yourself to look for data before moving on to the Data First approach.
+![FeatureImportanceBatter](FeatureImportance/FeatureImportanceBatter.png)
 
-**_Data First_**: Take a look at some of the most popular internet repositories of cool data sets we've listed below. If you find a data set that's particularly interesting for you, then it's totally okay to build your problem around that data set.
 
-There are plenty of amazing places that you can get your data from. We recommend you start looking at data sets in some of these resources first:
+## Recommendations
 
-* [UCI Machine Learning Datasets Repository](https://archive.ics.uci.edu/ml/datasets.html)
-* [Kaggle Datasets](https://www.kaggle.com/datasets)
-* [Awesome Datasets Repo on Github](https://github.com/awesomedata/awesome-public-datasets)
-* [New York City Open Data Portal](https://opendata.cityofnewyork.us/)
-* [Inside AirBNB](http://insideairbnb.com/)
+When considering who should be inducted in the Major League Baseball Hall of Fame, I would recommend the following:
 
-## The Deliverables
+1. When analyzing the past performances in order to make a decision on future inductees, remove those individuals who have not been elected due to non-performance related issues such as Performance Enhancing Drugs and scandals detrimental to the sport.
+2. When reviewing a player, some of the key areas to focus on should be MVP, Silver Slugger, Gold Glove and All-Star game appearances. There are several others but when analyzing what has had the most impact on voting in the past, those features were most predominant.
+3. Take into consideration which is more important, that there are no individuals who deserve to be in the Hall of Fame left out, that no one who doesn't deserve be let in or perhaps a combination of both. It is my recommendation that neither is more important than the other.
+4. It is important when considering a player for induction that not too much emphasis be placed on two sets of statistics that are highly correlated, otherwise it'll give additional the value to each.
+5. Although fielding is an important part of the game, most of the value of a Hall of Famer comes from the pitching or hitting statistics and to stay consistent with past voting should carry most of the weight.
 
-There are three deliverables for this project:
+## Future Work
 
-* A **GitHub repository**
-* A **Jupyter Notebook**
-* A **non-technical presentation**
+There are several other considerations that I would like to make in the future.
 
-Review the "Project Submission & Review" page in the "Milestones Instructions" topic for instructions on creating and submitting your deliverables. Refer to the rubric associated with this assignment for specifications describing high-quality deliverables.
-
-### Key Points
-
-* **Your deliverables should explicitly address each step of the data science process.** Refer to [the Data Science Process lesson](https://github.com/learn-co-curriculum/dsc-data-science-processes) from Topic 19 for more information about process models you can use.
-
-* **Your Jupyter Notebook should demonstrate an iterative approach to modeling.** This means that you begin with a basic model, evaluate it, and then provide justification for and proceed to a new model. We encourage you to try a bunch of different models: logistic regression, decision trees, or anything else you think would be appropriate.
-
-* **You must choose appropriate classification metrics and use them to evaluate your models.** Choosing the right classification metrics is a key data science skill, and should be informed by data exploration and the business problem itself. You must then use this metric to evaluate your model performance using both training and testing data.
-
-## Getting Started
-
-Create a new repository for your project to get started. We recommend structuring your project repository similar to the structure in [the Phase 1 Project Template](https://github.com/learn-co-curriculum/dsc-project-template). You can do this either by creating a new fork of that repository to work in or by building a new repository from scratch that mimics that structure.
-
-## Project Submission and Review
-
-Review the "Project Submission & Review" page in the "Milestones Instructions" topic to learn how to submit your project and how it will be reviewed. Your project must pass review for you to progress to the next Phase.
-
-## Summary
-
-This project is an opportunity to expand your data science toolkit by evaluating, choosing, and working with new datasets. Spending time up front making sure you have a good dataset for a solvable problem will help avoid the major problems that can sometimes derail data science projects. You've got this!
+1. Consider all Hall of Fame inductees, not just those voted in by the Baseball Writers of America.
+2. Further analyze how position impacts the Hall of Fame voting, for instance a catcher should be compared to other catchers rather than all position players.
+3. Which players who have currently played at least ten seasons and have not yet been eligible for HOF voting are likely to be elected based on the analysis.
+4. Incorporate the era that an individual played into the model. The game and the individual statistics have changed so much over the last 100 years that it's reasonable to assuem this is having an impact on the model.
