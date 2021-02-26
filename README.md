@@ -1,7 +1,7 @@
 
 # Major League Baseball Hall of Fame Analysis
 
-![MLB Logo](Visualizations/MLB Logo.png)
+![MLB-Logo](Visualizations/MLB-Logo.png)
 
 ## Contributing Member:
 
@@ -15,23 +15,12 @@ There is no better sound in sports than the crack of the bat or pop of the mitt,
 
 My first step was to import, explore, clean and combine all necessary datasets. All tables were provided by and downloaded from http://www.seanlahman.com/baseball-archive/statistics/. The following is a list of all tables used in this analysis.
 
-### Batting
-Contains all hitting statistics for every player broken down by sesaon.
-
-### Pitching
-Contains all pitching statistics for every player broken down by sesaon.
-
-### Fielding
-Contains all fielding statistics for every player broken down by sesaon.
-
-### All-Stars
-Contains the All-Star selections dating back to the inception of the game in 1933.
-
-### Awards
-Only top awards for on field performance were considered for this model.
-
-### Hall of Fame
-List of all players who have been elected into the Hall of Fame, will be the target variable.
+1. Batting - Contains all hitting statistics for every player broken down by sesaon.
+2. Pitching - Contains all pitching statistics for every player broken down by sesaon.
+3. Fielding - Contains all fielding statistics for every player broken down by sesaon.
+4. All-Stars - Contains the All-Star selections dating back to the inception of the game in 1933.
+5. Awards - Only top awards for on field performance were considered for this model.
+6. Hall of Fame - List of all players who have been elected into the Hall of Fame, will be the target variable.
 
 ## Initial Considerations:
 
@@ -73,7 +62,7 @@ The hitting model, which also used SVM, found the best results after the feature
 
 Below is also the top features of the batting model. Although most are what I would have initially predicted, OPS was a lot lower in importance than i had anticipated.
 
-![FeatureImportanceBatter](FeatureImportance/FeatureImportanceBatter.png)
+![FeatureImportanceBatter](Visualizations/FeatureImportanceBatter.png)
 
 
 ## Recommendations
